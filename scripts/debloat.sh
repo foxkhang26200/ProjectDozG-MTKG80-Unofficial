@@ -3,15 +3,15 @@
 
 # GENERAL / SYSTEM / BLOAT
 DEBLOAT_APPS=(
-"HMT" "PaymentFramework" "DigitalWellbeing" "FactoryCameraFB"
+"HMT" "PaymentFramework" "FactoryCameraFB"
 "WlanTest" "AirGlance" "AirReadingGlass" "AndroidGlassesCore"
-"SOAgent77" "ARCore" "ARDrawing" "ARZone" "BGMProvider"
-"SingleTakeService" "BixbyWakeup" "BlockchainBasicKit"
+"SOAgent77" "BGMProvider"
+"SingleTakeService" "BlockchainBasicKit"
 "Cameralyzer" "DictDiotekForSec" "EasymodeContactsWidget81"
 "Fast" "FunModeSDK" "GearManagerStub" "KidsHome_Installer"
-"LinkSharing_v11" "LiveDrawing" "MAPSAgent" "MdecService"
+"LinkSharing_v11" "MAPSAgent" "MdecService"
 "MinusOnePage" "MoccaMobile" "Netflix_stub" "Notes40"
-"ParentalCare" "PhotoTable" "SmartReminder" "SmartSwitchStub"
+"ParentalCare" "PhotoTable" "SmartReminder"
 "UnifiedWFC" "UniversalMDMClient" "VideoEditorLite_Dream_N"
 "VisionIntelligence3.7" "VoiceAccess" "VTCameraSetting"
 "WebManual" "WifiGuider" "AutomationTest_FB" "FactoryTestProvider"
@@ -37,23 +37,13 @@ CARRIER_APPS=(
 SAMSUNG_APPS=(
 "SamsungCalendar" "SamsungTTS" "SamsungBilling"
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
-"SamsungPass" "SamsungSmartSuggestions"
+"SamsungPass"
 "SamsungPassAutofill_v1"
-"AirCommand" "AppUpdateCenter" "AREmoji"
-"AREmojiEditor" "AutoDoodle" "AvatarEmojiSticker"
+"AirCommand" "AppUpdateCenter"
+"AvatarEmojiSticker"
 "AvatarEmojiSticker_S" "AvatarPicker"
-"GalleryWidget" "LiveStickers" "StoryService"
-"StickerFaceARAvatar" "sticker"
-)
-
-
-# SAMSUNG AI / SMART
-SAMSUNG_AI=(
-"LiveTranscribe" "Bixby" "BixbyInterpreter"
-"BixbyVisionFramework3.5" "SettingsBixby"
-"SmartEye" "SmartPush" "SmartPush_64"
-"SmartThingsKit" "SmartTouchCall"
-"VisionIntelligence3.7"
+"LiveStickers" "StoryService"
+"sticker"
 )
 
 
@@ -62,9 +52,9 @@ GOOGLE_APPS=(
 "SpeechServicesByGoogle" "Maps" "Duo" "Photos"
 "AssistantShell" "BardShell" "DuoStub"
 "GoogleCalendarSyncAdapter" "AndroidDeveloperVerifier"
-"YourPhone_Stub" "AndroidAutoStub" "FamilyLinkParentalControls"
+"YourPhone_Stub" "FamilyLinkParentalControls"
 "AndroidSystemIntelligence" "GoogleRestore"
-"SamsungMessages" "SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
+"SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
 )
 
 
@@ -84,21 +74,19 @@ HARDWARE_DRIVERS=(
 # MISC / SERVICES
 MISC_SERVICES=(
 "AuthFramework" "Discover" "DiscoverSEP"
-"EarphoneTypeC" "EasySetup" "FotaAgent"
-"HashTagService" "LedCoverService"
-"LinkToWindowsService" "MemorySaver_O_Refresh"
-"MultiControl" "MultiControlVP6"
+"EasySetup"
+"HashTagService"
+"MemorySaver_O_Refresh"
 "OMCAgent5" "OneStoreService" "FactoryAirCommandManager"
 "SOAgent7" "SOAgent75" "SOAgent76"
 "SolarAudio-service" "SPPPushClient"
 "SumeNNService" "SVoiceIME"
 "SwiftkeyIme" "SwiftkeySetting"
-"SystemUpdate" "TADownloader"
-"TalkbackSE" "TaPackAuthFw"
+"TADownloader" "TaPackAuthFw"
 "UltraDataSaving_O" "Upday"
 "YourPhone_P1_5" "DsmsAPK"
 "vexfwk_service" "VexScanner"
-"LiveEffectService" "MyGalaxyService"
+"MyGalaxyService"
 )
 
 
@@ -202,7 +190,6 @@ DEBLOAT() {
     KICK "$EXTRACTED_FIRM_DIR" "${DEBLOAT_APPS[@]}"
     KICK "$EXTRACTED_FIRM_DIR" "${CARRIER_APPS[@]}"
     KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_APPS[@]}"
-    KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_AI[@]}"
     KICK "$EXTRACTED_FIRM_DIR" "${GOOGLE_APPS[@]}"
     KICK "$EXTRACTED_FIRM_DIR" "${FACEBOOK_APPS[@]}"
     KICK "$EXTRACTED_FIRM_DIR" "${HARDWARE_DRIVERS[@]}"
