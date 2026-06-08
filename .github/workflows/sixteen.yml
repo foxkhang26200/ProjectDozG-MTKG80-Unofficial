@@ -6,23 +6,23 @@ on:
       STOCK_DEVICE:
         description: "STOCK_DEVICE_MODEL or None"
         required: true
-        default: "SM-A225F"
+        default: "SM-A127F"
       USE_UI_8_TETHERING_APEX:
         description: "Set True if your kernel BPF version is 5.4 (lower than 5.10)."
         required: true
         default: "False"
       TARGET_DEVICE:
-        description: "TARGET_DEVICE_MODEL."
+        description: "Base Devices"
         required: true
-        default: "SM-A346E"
+        default: "SM-A176B"
       TARGET_DEVICE_CSC:
-        description: "TARGET_DEVICE_CSC."
+        description: "Base Devices CSC."
         required: true
-        default: "BKD"
+        default: "XXV"
       TARGET_DEVICE_IMEI:
-        description: "TARGET_DEVICE_IMEI."
+        description: "Base Devices IMEI."
         required: true
-        default: "353435774197736"
+        default: "354818848266026"
       OUTPUT_FILESYSTEM:
         description: "OUTPUT_FILESYSTEM. e.g erofs / ext4 / f2fs"
         required: true
@@ -34,7 +34,7 @@ on:
 
 jobs:
   build:
-    name: Start QuantumROM Tools Sixteen.
+    name: Start ProjectDozGROM-Builder Sixteen.
     runs-on: ubuntu-24.04
 
     steps:
