@@ -34,7 +34,7 @@ source "$(pwd)/scripts/QuantumRom.sh"
 EXTRACT_SUPER_IMG "$FIRM_DIR/$TARGET_DEVICE"
 EXTRACT_FIRMWARE_IMG "$FIRM_DIR/$TARGET_DEVICE" "all"
 
-DECODE_OMC "$FIRM_DIR/$TARGET_DEVICE" "$WORK_DIR"
+DECODE_OMC "$FIRM_DIR/$TARGET_DEVICE"
 DEBLOAT "$FIRM_DIR/$TARGET_DEVICE"
 
 APPLY_STOCK_CONFIG "$FIRM_DIR/$TARGET_DEVICE"
@@ -63,7 +63,7 @@ PATCH_BT_LIB "$FIRM_DIR/$TARGET_DEVICE" "$WORK_DIR"
 
 B_ID="$(grep -m1 '^ro.system.build.id=' "$FIRM_DIR/$TARGET_DEVICE/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
 B_V="$(grep -m1 '^ro.system.build.version.incremental=' "$FIRM_DIR/$TARGET_DEVICE/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
-BUILD_PROP "$FIRM_DIR/$TARGET_DEVICE" "system" "ro.build.display.id" "ProjectDozG Unoffical-N/A                    ${B_ID} ${B_V}"
-BUILD_PROP "$FIRM_DIR/$TARGET_DEVICE" "product" "ro.build.display.id" "ProjectDozG Unoffical-N/A                    ${B_ID} ${B_V}"
+BUILD_PROP "$FIRM_DIR/$TARGET_DEVICE" "system" "ro.build.display.id" "ProjectDozG Unofficial Beta 2 by Lucasz                    ${B_ID} ${B_V}"
+BUILD_PROP "$FIRM_DIR/$TARGET_DEVICE" "product" "ro.build.display.id" "ProjectDozG Unofficial Beta 2 by Lucasz                    ${B_ID} ${B_V}"
 
 BUILD_IMG "$FIRM_DIR/$TARGET_DEVICE" "all" "$OUTPUT_FILESYSTEM" "$OUT_DIR"
