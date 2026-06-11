@@ -17,9 +17,9 @@
   - Galaxy A16 5G - A166P/A166B/A166M, a16xm/a16x (Recored, for A22 only)
   - Galaxy A17 5G - A176B, a17x (Recored, for A22 only)
   - Galaxy A26 5G - A266B, a26x (Eureka for A22)
-  - Galaxy A35 5G - A356B, a35x (Eureka for A32)
+  - Galaxy A35 5G/A36 5G - A356B/A366B, a35x/a36xq (Eureka for A32)
 - Full Galaxy AI support from Galaxy S23-S24-S25, except Audio Eraser and Now brief
-- Full Awesome Intelligence features support from Galaxy A26 5G, A36 5G, A56 5G (Eureka A22 - Galaxy A26 5G base), and especially, in the Eureka for A22 variant (Galaxy A26 5G base) will support fully both Galaxy AI and Awesome Intelligence features simultaneously.
+- Full Awesome Intelligence features support from Galaxy A26 5G, A36 5G, A56 5G (Eureka A22 - Galaxy A26 5G base & Eureka A32 - Galaxy A36 5G? base, Galaxy A36 5G? base because I'm not sure Eureka for A32 variant too), and especially, in the Eureka A22 and Eureka A32 variant (Galaxy A26 5G/A36 5G base) will support fully both Galaxy AI and Awesome Intelligence features simultaneously.
 - App Lock Support
 - HighEnd animations
 - Screenshots from Secure Apps support
