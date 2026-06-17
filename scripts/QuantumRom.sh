@@ -84,7 +84,7 @@ GET_PROP() {
     esac
 
     if [ ! -f "$FILE" ]; then
-        echo -e "- ${RED}File not found: $FILE"
+        echo -e "- File not found: $FILE"
         return 1
     fi
 
@@ -185,7 +185,7 @@ DOWNLOAD_FIRMWARE() {
     fi
 
     # --- Step 2: Download Firmware ---
-    python3 -m samloader -m "$MODEL" -r "$CSC" -i "$IMEI" download -v "$VERSION" -O "$DOWN_DIR"
+    python3 -m samloader -m "$MODEL" -r "$CSC" -i "$IMEI" download -O "$DOWN_DIR"
     if [ $? -ne 0 ]; then
         echo -e "⛔️ Download failed. Check IMEI/MODEL/CSC."
         exit 1
@@ -210,6 +210,11 @@ EXTRACT_FIRMWARE() {
     local FIRM_DIR="$1"
 
     echo -e "Extracting downloaded firmware."
+
+	if [ ! -d "$FIRM_DIR" ]; then
+        echo -e "- Directory not found: $FIRM_DIR"
+        exit
+    fi
 
     # ---- ZIP ----
     for file in "$FIRM_DIR"/*.zip; do
@@ -333,13 +338,14 @@ EXTRACT_SUPER_IMG() {
             mv -f "$FIRM_DIR/super_raw.img" "$FIRM_DIR/super.img"
         fi
 
+        echo "- Extracting partitions from super.img"
         "$lpunpack" "$FIRM_DIR/super.img" "$FIRM_DIR" || return 1
         rm -f "$FIRM_DIR/super.img"
 
         echo -e "super.img extraction complete"
 
     else
-        echo -e "${RED}No super.img found."
+        echo -e "No super.img found."
     fi
 }
 
@@ -352,10 +358,10 @@ PREPARE_PARTITIONS() {
 
     local EXTRACTED_FIRM_DIR="$1"
 
-    echo -e "Preparing partitinos. $STOCK_DEVICE"
+    echo -e "Preparing partitions. $STOCK_DEVICE"
 	
 	if [ ! -d "$EXTRACTED_FIRM_DIR" ]; then
-        echo -e "${RED} Directory not found: $EXTRACTED_FIRM_DIR"
+        echo -e "- Directory not found: $EXTRACTED_FIRM_DIR"
         return 1
     fi
 
@@ -446,12 +452,12 @@ EXTRACT_FIRMWARE_IMG() {
             local tmp_raw="${imgfile}.raw"
 
             if ! simg2img "$imgfile" "$tmp_raw" >/dev/null 2>&1; then
-                echo -e "${RED}Failed to convert sparse image: $img_name"
+                echo -e "Failed to convert sparse image: $img_name"
                 return
             fi
 
             if [ ! -f "$tmp_raw" ]; then
-                echo -e "${RED}- Sparse conversion output missing: $tmp_raw"
+                echo -e "- Sparse conversion output missing: $tmp_raw"
                 return
             fi
 
@@ -481,7 +487,7 @@ EXTRACT_FIRMWARE_IMG() {
                 ;;
 
             *)
-                echo -e "${RED}- $img_name unsupported filesystem type: ($fstype), skipping"
+                echo -e "- $img_name unsupported filesystem type: ($fstype), skipping"
                 ;;
         esac
     }
@@ -499,7 +505,7 @@ EXTRACT_FIRMWARE_IMG() {
         local TARGET_IMG="${EXTRACTED_FIRM_DIR}/$MODE"
 
         if [ ! -f "$TARGET_IMG" ]; then
-            echo -e "${RED}- Image not found: $TARGET_IMG"
+            echo -e "- Image not found: $TARGET_IMG"
             return 1
         fi
 
@@ -573,7 +579,7 @@ INSTALL_FRAMEWORK() {
     local framework_apk="$2"
 
 	if [ ! -f "$framework_apk" ]; then
-        echo -e "- ${RED}File not found: $framework_apk"
+        echo -e "- File not found: $framework_apk"
         return 1
     fi
 
@@ -608,7 +614,7 @@ DECOMPILE() {
     echo -e "Decompiling: $FILE"
 
 	if [ ! -f "$FILE" ]; then
-        echo -e "-${RED} File not found: $FILE"
+        echo -e "- File not found: $FILE"
         return 1
     fi
 
@@ -643,7 +649,7 @@ RECOMPILE() {
     echo -e "Recompiling: $DECOMPILED_DIR"
 
 	if [ ! -d "$DECOMPILED_DIR" ]; then
-        echo -e "-${RED} Directory not found: $DECOMPILED_DIR"
+        echo -e "- Directory not found: $DECOMPILED_DIR"
         return 1
     fi
 
@@ -958,7 +964,7 @@ PATCH_SSRM() {
     echo -e "- Patching: $FILE"
 
     if [ ! -f "$FILE" ]; then
-        echo -e "- ${RED}File not found! Skipping..."
+        echo -e "- File not found! Skipping..."
         return 1
     fi
 
@@ -997,7 +1003,7 @@ PATCH_BT_LIB() {
     echo -e "Patching Bluetooth library."
     # Get libbluetooth_jni.so
     if ! ls "$EXTRACTED_FIRM_DIR"/system/system/apex/com.android.bt*.apex >/dev/null 2>&1; then
-        echo -e "- ${RED} No bluetooth apex file found."
+        echo -e "- No bluetooth apex file found."
         return 1
     fi
 
@@ -1283,7 +1289,7 @@ PATCH_SELINUX() {
 
     echo -e "Patching selinux."
 
-	UNSUPPORTED_SELINUX=("audiomirroring" "fabriccrypto" "hal_dsms_default" "qb_id_prop" "hal_dsms_service" "proc_compaction_proactiveness" "sbauth" "ker_app" "kpp_app" "kpp_data" "attiqi_app" "kpoc_charger" "sec_diag")
+	UNSUPPORTED_SELINUX=("audiomirroring" "fabriccrypto" "hal_dsms_default" "qb_id_prop" "hal_dsms_service" "proc_compaction_proactiveness" "sbauth" "ker_app" "kpp_app" "kpp_data" "attiqi_app" "kpoc_charger" "sec_diag" "mosey_app")
 
     if [ -d "${EXTRACTED_FIRM_DIR}/system" ]; then
 	    echo "- Patching selinux for system"
@@ -1297,7 +1303,7 @@ PATCH_SELINUX() {
     fi
 
     if [ -d "$TARGET_ROM_SYSTEM_EXT_DIR" ]; then
-        echo -e "${RED} - Patching selinux for system_ext."
+        echo -e "- Patching selinux for system_ext."
 
         find "${TARGET_ROM_SYSTEM_EXT_DIR}/etc/selinux/mapping/" -type f -name "*.0.cil" | while read -r SELINUX_FILE; do
             # echo "  - Processing: $SELINUX_FILE"
@@ -1417,6 +1423,7 @@ APPLY_CUSTOM_FLOATING_FEATURE() {
 
     #========== LAUNCHER ==========#
     UPDATE_FLOATING_FEATURE "$FLOATING_FEATURE_FILE_DIRECTORY" "SEC_FLOATING_FEATURE_LAUNCHER_SUPPORT_CLOCK_LIVE_ICON" "TRUE"
+    UPDATE_FLOATING_FEATURE "$FLOATING_FEATURE_FILE_DIRECTORY" "SEC_FLOATING_FEATURE_LAUNCHER_CONFIG_ANIMATION_TYPE" "HighEnd"
 
     #========== AOD ==========#
 	if [ -d "$FIRM_DIR/$TARGET_DEVICE/system/system/priv-app"/AODService_* ]; then
@@ -1802,6 +1809,8 @@ APPLY_STOCK_CONFIG() {
     if [ -d "${DEVICES_DIR}/$STOCK_DEVICE/extra" ]; then
         cp -af "${DEVICES_DIR}/$STOCK_DEVICE/extra/." "$(pwd)/OUT"
     fi
+
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.system.model" "$STOCK_DEVICE"
 }
 
 
@@ -1841,7 +1850,7 @@ BUILD_PROP() {
     esac
 
     if [ ! -f "$FILE" ]; then
-        echo -e "- ${RED}File not found: $FILE"
+        echo -e "- File not found: $FILE"
         return 1
     fi
 
@@ -2454,7 +2463,7 @@ BUILD_IMG() {
             mv "${OUT_IMG}.sparse" "$OUT_IMG"
 
         else
-            echo -e "${RED}Unsupported filesystem: $FILE_SYSTEM"
+            echo -e "Unsupported filesystem: $FILE_SYSTEM"
             return
         fi
     }
