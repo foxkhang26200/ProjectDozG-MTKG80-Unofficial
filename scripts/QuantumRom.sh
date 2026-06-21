@@ -2139,6 +2139,10 @@ APPLY_CUSTOM_FEATURES() {
 	chown -R "$REAL_USER:$REAL_USER" "$EXTRACTED_FIRM_DIR"
     chmod -R u+rwX "$EXTRACTED_FIRM_DIR"
 	
+	if [ -d "$(pwd)/QuantumROM/usefull_things" ]; then
+        cp -a "$(pwd)/QuantumROM/usefull_things/." "$(pwd)/OUT"
+    fi
+}
 
 
 DECODE_OMC() {
